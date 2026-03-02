@@ -1,0 +1,509 @@
+ST Edge AI Core v2.2.0-20266 2adc00962
+Created date          : 2026-01-21 17:37:57
+Parameters            : generate --target stm32l4 --name network -m C:/Users/DO DUC KHOI/Downloads/mdl_moe (1).keras --compression none --verbosity 1 --workspace C:/Users/DODUCK~1/AppData/Local/Temp/mxAI_workspace153176964224004310620649022056833 --output C:/Users/DO DUC KHOI/.stm32cubemx/network_output
+
+Exec/report summary (generate)
+--------------------------------------------------------------------------------------------------------------
+model file         :   C:\Users\DO DUC KHOI\Downloads\mdl_moe (1).keras                                       
+type               :   keras                                                                                  
+c_name             :   network                                                                                
+compression        :   none                                                                                   
+options            :   allocate-inputs, allocate-outputs                                                      
+optimization       :   balanced                                                                               
+target/series      :   stm32l4                                                                                
+workspace dir      :   C:\Users\DODUCK~1\AppData\Local\Temp\mxAI_workspace153176964224004310620649022056833   
+output dir         :   C:\Users\DO DUC KHOI\.stm32cubemx\network_output                                       
+model_fmt          :   float                                                                                  
+model_name         :   mdl_moe_1                                                                              
+model_hash         :   0x9bb12521ebb97b4e6eaf6170ce923daf                                                     
+params #           :   88,513 items (345.75 KiB)                                                              
+--------------------------------------------------------------------------------------------------------------
+input 1/1          :   'input_layer', f32(1x333x1), 1.30 KBytes, activations                                  
+output 1/1         :   'moe', f32(1x7), 28 Bytes, activations                                                 
+macc               :   606,732                                                                                
+weights (ro)       :   353,412 B (345.13 KiB) (1 segment) / -640(-0.2%) vs float model                        
+activations (rw)   :   12,320 B (12.03 KiB) (1 segment) *                                                     
+ram (total)        :   12,320 B (12.03 KiB) = 12,320 + 0 + 0                                                  
+--------------------------------------------------------------------------------------------------------------
+(*) 'input'/'output' buffers are allocated in the activations buffer
+
+Model name - mdl_moe_1
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+m_id   layer (type,original)                          oshape             param/size           macc             connected to   | c_size            c_macc               c_type                                 
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+0      input_layer (Input, InputLayer)                [b:1,h:333,c:1]                                                         |                                        
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+1      expert_1_conv1 (Conv2D, Conv1D)                [b:1,h:333,c:8]    32/128              8,000              input_layer   | -128(-100.0%)     -8,000(-100.0%)      
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+2      expert_2_conv1 (Conv2D, Conv1D)                [b:1,h:333,c:8]    32/128              8,000              input_layer   | -128(-100.0%)     -8,000(-100.0%)      
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+3      expert_3_conv1 (Conv2D, Conv1D)                [b:1,h:333,c:8]    32/128              8,000              input_layer   | -128(-100.0%)     -8,000(-100.0%)      
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+4      expert_1_bn1 (ScaleBias, BatchNormalization)   [b:1,h:333,c:8]    16/64               5,328           expert_1_conv1   | -64(-100.0%)      -5,328(-100.0%)      
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+5      expert_2_bn1 (ScaleBias, BatchNormalization)   [b:1,h:333,c:8]    16/64               5,328           expert_2_conv1   | -64(-100.0%)      -5,328(-100.0%)      
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+6      expert_3_bn1 (ScaleBias, BatchNormalization)   [b:1,h:333,c:8]    16/64               5,328           expert_3_conv1   | -64(-100.0%)      -5,328(-100.0%)      
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+7      expert_1_relu1 (Nonlinearity, ReLU)            [b:1,h:333,c:8]                        2,664             expert_1_bn1   |                   -2,664(-100.0%)      
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+8      expert_2_relu1 (Nonlinearity, ReLU)            [b:1,h:333,c:8]                        2,664             expert_2_bn1   |                   -2,664(-100.0%)      
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+9      expert_3_relu1 (Nonlinearity, ReLU)            [b:1,h:333,c:8]                        2,664             expert_3_bn1   |                   -2,664(-100.0%)      
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+10     expert_1_pool1 (Pool, MaxPooling1D)            [b:1,h:166,c:8]                        2,656           expert_1_relu1   | +128(+100.0%)     +10,664(+401.5%)     Conv2D_[22]                            
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+11     expert_2_pool1 (Pool, MaxPooling1D)            [b:1,h:166,c:8]                        2,656           expert_2_relu1   | +128(+100.0%)     +10,664(+401.5%)     Conv2D_[15]                            
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+12     expert_3_pool1 (Pool, MaxPooling1D)            [b:1,h:166,c:8]                        2,656           expert_3_relu1   | +128(+100.0%)     +10,664(+401.5%)     Conv2D_[8]                             
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+13     expert_1_conv2 (Conv2D, Conv1D)                [b:1,h:166,c:16]   912/3,648         148,752           expert_1_pool1   | -3,648(-100.0%)   -148,752(-100.0%)    
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+14     gating_conv1 (Conv2D, Conv1D)                  [b:1,h:333,c:8]    48/192             13,328              input_layer   | -192(-100.0%)     -13,328(-100.0%)     
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+15     expert_2_conv2 (Conv2D, Conv1D)                [b:1,h:166,c:16]   912/3,648         148,752           expert_2_pool1   | -3,648(-100.0%)   -148,752(-100.0%)    
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+16     expert_3_conv2 (Conv2D, Conv1D)                [b:1,h:166,c:16]   912/3,648         148,752           expert_3_pool1   | -3,648(-100.0%)   -148,752(-100.0%)    
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+17     expert_1_bn2 (ScaleBias, BatchNormalization)   [b:1,h:166,c:16]   32/128              5,312           expert_1_conv2   | -128(-100.0%)     -5,312(-100.0%)      
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+18     gating_bn1 (ScaleBias, BatchNormalization)     [b:1,h:333,c:8]    16/64               5,328             gating_conv1   | -64(-100.0%)      -5,328(-100.0%)      
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+19     expert_2_bn2 (ScaleBias, BatchNormalization)   [b:1,h:166,c:16]   32/128              5,312           expert_2_conv2   | -128(-100.0%)     -5,312(-100.0%)      
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+20     expert_3_bn2 (ScaleBias, BatchNormalization)   [b:1,h:166,c:16]   32/128              5,312           expert_3_conv2   | -128(-100.0%)     -5,312(-100.0%)      
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+21     expert_1_relu2 (Nonlinearity, ReLU)            [b:1,h:166,c:16]                       2,656             expert_1_bn2   |                   -2,656(-100.0%)      
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+22     gating_relu1 (Nonlinearity, ReLU)              [b:1,h:333,c:8]                        2,664               gating_bn1   |                   -2,664(-100.0%)      
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+23     expert_2_relu2 (Nonlinearity, ReLU)            [b:1,h:166,c:16]                       2,656             expert_2_bn2   |                   -2,656(-100.0%)      
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+24     expert_3_relu2 (Nonlinearity, ReLU)            [b:1,h:166,c:16]                       2,656             expert_3_bn2   |                   -2,656(-100.0%)      
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+25     expert_1_pool2 (Pool, MaxPooling1D)            [b:1,h:83,c:16]                        2,656           expert_1_relu2   | +3,648(+100.0%)   +151,408(+5700.6%)   Conv2D_[23]                            
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+26     gating_pool1 (Pool, MaxPooling1D)              [b:1,h:166,c:8]                        2,656             gating_relu1   | +192(+100.0%)     +15,992(+602.1%)     Conv2D_[0]                             
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+27     expert_2_pool2 (Pool, MaxPooling1D)            [b:1,h:83,c:16]                        2,656           expert_2_relu2   | +3,648(+100.0%)   +151,408(+5700.6%)   Conv2D_[16]                            
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+28     expert_3_pool2 (Pool, MaxPooling1D)            [b:1,h:83,c:16]                        2,656           expert_3_relu2   | +3,648(+100.0%)   +151,408(+5700.6%)   Conv2D_[9]                             
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+29     expert_1_flatten (Reshape, Flatten)            [b:1,c:1328]                                           expert_1_pool2   |                                        
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+30     gating_flatten (Reshape, Flatten)              [b:1,c:1328]                                             gating_pool1   |                                        
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+31     expert_2_flatten (Reshape, Flatten)            [b:1,c:1328]                                           expert_2_pool2   |                                        
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+32     expert_3_flatten (Reshape, Flatten)            [b:1,c:1328]                                           expert_3_pool2   |                                        
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+33     expert_1_dense_dense (Dense, Dense)            [b:1,c:16]         21,264/85,056      21,264         expert_1_flatten   |                   +16(+0.1%)           Dense_/Nonlinearity_[24, 25]           
+       expert_1_dense (Nonlinearity, Dense)           [b:1,c:16]                                16     expert_1_dense_dense   |                   -16(-100.0%)         
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+34     gating_dense_dense (Dense, Dense)              [b:1,c:16]         21,264/85,056      21,264           gating_flatten   |                   +16(+0.1%)           Dense_/Nonlinearity_[1, 2]             
+       gating_dense (Nonlinearity, Dense)             [b:1,c:16]                                16       gating_dense_dense   |                   -16(-100.0%)         
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+35     expert_2_dense_dense (Dense, Dense)            [b:1,c:16]         21,264/85,056      21,264         expert_2_flatten   |                   +16(+0.1%)           Dense_/Nonlinearity_[17, 18]           
+       expert_2_dense (Nonlinearity, Dense)           [b:1,c:16]                                16     expert_2_dense_dense   |                   -16(-100.0%)         
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+36     expert_3_dense_dense (Dense, Dense)            [b:1,c:16]         21,264/85,056      21,264         expert_3_flatten   |                   +16(+0.1%)           Dense_/Nonlinearity_[10, 11]           
+       expert_3_dense (Nonlinearity, Dense)           [b:1,c:16]                                16     expert_3_dense_dense   |                   -16(-100.0%)         
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+38     gating_output_dense (Dense, Dense)             [b:1,c:3]          51/204                 51             gating_dense   |                   +45(+88.2%)          Dense_/Nonlinearity_[3, 4]             
+       gating_output (Nonlinearity, Dense)            [b:1,c:3]                                 45      gating_output_dense   |                   -45(-100.0%)         
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+41     expert_1_softmax_dense (Dense, Dense)          [b:1,c:7]          119/476               119           expert_1_dense   |                   +105(+88.2%)         Dense_/Nonlinearity_[26, 27]           
+       expert_1_softmax (Nonlinearity, Dense)         [b:1,c:7]                                105   expert_1_softmax_dense   |                   -105(-100.0%)        
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+42     gate_select_1 (Dense, Dense)                   [b:1,c:1]          3/12                    3            gating_output   |                                        Dense_[7]                              
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+43     expert_2_softmax_dense (Dense, Dense)          [b:1,c:7]          119/476               119           expert_2_dense   |                   +105(+88.2%)         Dense_/Nonlinearity_[19, 20]           
+       expert_2_softmax (Nonlinearity, Dense)         [b:1,c:7]                                105   expert_2_softmax_dense   |                   -105(-100.0%)        
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+44     gate_select_2 (Dense, Dense)                   [b:1,c:1]          3/12                    3            gating_output   |                                        Dense_[6]                              
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+45     expert_3_softmax_dense (Dense, Dense)          [b:1,c:7]          119/476               119           expert_3_dense   |                   +105(+88.2%)         Dense_/Nonlinearity_[12, 13]           
+       expert_3_softmax (Nonlinearity, Dense)         [b:1,c:7]                                105   expert_3_softmax_dense   |                   -105(-100.0%)        
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+46     gate_select_3 (Dense, Dense)                   [b:1,c:1]          3/12                    3            gating_output   |                                        Dense_[5]                              
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+47     weighted_expert_1 (Eltwise, Multiply)          [b:1,c:7]                                  7         expert_1_softmax   |                                        Eltwise/mul_[28]                       
+                                                                                                              gate_select_1   | 
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+48     weighted_expert_2 (Eltwise, Multiply)          [b:1,c:7]                                  7         expert_2_softmax   |                                        Eltwise/mul_[21]                       
+                                                                                                              gate_select_2   | 
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+49     weighted_expert_3 (Eltwise, Multiply)          [b:1,c:7]                                  7         expert_3_softmax   |                                        Eltwise/mul_[14]                       
+                                                                                                              gate_select_3   | 
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+50     moe_output (Eltwise, Add)                      [b:1,c:7]                                  7        weighted_expert_1   |                   +7(+100.0%)          Eltwise/add_/Eltwise/add_[o][29, 30]   
+                                                                                                          weighted_expert_2   | 
+                                                                                                          weighted_expert_3   | 
+------ ---------------------------------------------- ------------------ --------------- --------- ------------------------ --- ----------------- -------------------- -------------------------------------- 
+model/c-model: macc=643,973/606,732 -37,241(-5.8%) weights=354,052/353,412 -640(-0.2%) activations=--/12,320 io=--/0
+
+
+
+Generated C-graph summary
+------------------------------------------------------------------------------------------------------------------------
+model name            : mdl_moe_1
+c-name                : network
+c-node #              : 31
+c-array #             : 79
+activations size      : 12320 (1 segment)
+weights size          : 353412 (1 segment)
+macc                  : 606732
+inputs                : ['input_layer_output']
+outputs               : ['moe_output_output']
+
+C-Arrays (79)
+------ -------------------------------- ------------- ------------------------- ------------- --------- 
+c_id   name (*_array)                   item/size     domain/mem-pool           c-type        comment   
+------ -------------------------------- ------------- ------------------------- ------------- --------- 
+0      expert_1_conv1_bias              8/32          weights/weights           const float             
+1      expert_1_conv1_output            1328/5312     activations/**default**   float                   
+2      expert_1_conv1_scratch0          3/12          activations/**default**   float                   
+3      expert_1_conv1_scratch1          16/64         activations/**default**   float                   
+4      expert_1_conv1_weights           24/96         weights/weights           const float             
+5      expert_1_conv2_bias              16/64         weights/weights           const float             
+6      expert_1_conv2_output            1328/5312     activations/**default**   float                   
+7      expert_1_conv2_scratch0          56/224        activations/**default**   float                   
+8      expert_1_conv2_scratch1          32/128        activations/**default**   float                   
+9      expert_1_conv2_weights           896/3584      weights/weights           const float             
+10     expert_1_dense_dense_bias        16/64         weights/weights           const float             
+11     expert_1_dense_dense_output      16/64         activations/**default**   float                   
+12     expert_1_dense_dense_weights     21248/84992   weights/weights           const float             
+13     expert_1_dense_output            16/64         activations/**default**   float                   
+14     expert_1_softmax_dense_bias      7/28          weights/weights           const float             
+15     expert_1_softmax_dense_output    7/28          activations/**default**   float                   
+16     expert_1_softmax_dense_weights   112/448       weights/weights           const float             
+17     expert_1_softmax_output          7/28          activations/**default**   float                   
+18     expert_2_conv1_bias              8/32          weights/weights           const float             
+19     expert_2_conv1_output            1328/5312     activations/**default**   float                   
+20     expert_2_conv1_scratch0          3/12          activations/**default**   float                   
+21     expert_2_conv1_scratch1          16/64         activations/**default**   float                   
+22     expert_2_conv1_weights           24/96         weights/weights           const float             
+23     expert_2_conv2_bias              16/64         weights/weights           const float             
+24     expert_2_conv2_output            1328/5312     activations/**default**   float                   
+25     expert_2_conv2_scratch0          56/224        activations/**default**   float                   
+26     expert_2_conv2_scratch1          32/128        activations/**default**   float                   
+27     expert_2_conv2_weights           896/3584      weights/weights           const float             
+28     expert_2_dense_dense_bias        16/64         weights/weights           const float             
+29     expert_2_dense_dense_output      16/64         activations/**default**   float                   
+30     expert_2_dense_dense_weights     21248/84992   weights/weights           const float             
+31     expert_2_dense_output            16/64         activations/**default**   float                   
+32     expert_2_softmax_dense_bias      7/28          weights/weights           const float             
+33     expert_2_softmax_dense_output    7/28          activations/**default**   float                   
+34     expert_2_softmax_dense_weights   112/448       weights/weights           const float             
+35     expert_2_softmax_output          7/28          activations/**default**   float                   
+36     expert_3_conv1_bias              8/32          weights/weights           const float             
+37     expert_3_conv1_output            1328/5312     activations/**default**   float                   
+38     expert_3_conv1_scratch0          3/12          activations/**default**   float                   
+39     expert_3_conv1_scratch1          16/64         activations/**default**   float                   
+40     expert_3_conv1_weights           24/96         weights/weights           const float             
+41     expert_3_conv2_bias              16/64         weights/weights           const float             
+42     expert_3_conv2_output            1328/5312     activations/**default**   float                   
+43     expert_3_conv2_scratch0          56/224        activations/**default**   float                   
+44     expert_3_conv2_scratch1          32/128        activations/**default**   float                   
+45     expert_3_conv2_weights           896/3584      weights/weights           const float             
+46     expert_3_dense_dense_bias        16/64         weights/weights           const float             
+47     expert_3_dense_dense_output      16/64         activations/**default**   float                   
+48     expert_3_dense_dense_weights     21248/84992   weights/weights           const float             
+49     expert_3_dense_output            16/64         activations/**default**   float                   
+50     expert_3_softmax_dense_bias      7/28          weights/weights           const float             
+51     expert_3_softmax_dense_output    7/28          activations/**default**   float                   
+52     expert_3_softmax_dense_weights   112/448       weights/weights           const float             
+53     expert_3_softmax_output          7/28          activations/**default**   float                   
+54     gate_select_1_output             1/4           activations/**default**   float                   
+55     gate_select_1_weights            3/12          weights/weights           const float             
+56     gate_select_2_output             1/4           activations/**default**   float                   
+57     gate_select_2_weights            3/12          weights/weights           const float             
+58     gate_select_3_output             1/4           activations/**default**   float                   
+59     gate_select_3_weights            3/12          weights/weights           const float             
+60     gating_conv1_bias                8/32          weights/weights           const float             
+61     gating_conv1_output              1328/5312     activations/**default**   float                   
+62     gating_conv1_scratch0            5/20          activations/**default**   float                   
+63     gating_conv1_scratch1            16/64         activations/**default**   float                   
+64     gating_conv1_weights             40/160        weights/weights           const float             
+65     gating_dense_dense_bias          16/64         weights/weights           const float             
+66     gating_dense_dense_output        16/64         activations/**default**   float                   
+67     gating_dense_dense_weights       21248/84992   weights/weights           const float             
+68     gating_dense_output              16/64         activations/**default**   float                   
+69     gating_output_dense_bias         3/12          weights/weights           const float             
+70     gating_output_dense_output       3/12          activations/**default**   float                   
+71     gating_output_dense_weights      48/192        weights/weights           const float             
+72     gating_output_output             3/12          activations/**default**   float                   
+73     input_layer_output               333/1332      activations/**default**   float         /input    
+74     moe_output_left_0_output         7/28          activations/**default**   float                   
+75     moe_output_output                7/28          activations/**default**   float         /output   
+76     weighted_expert_1_output         7/28          activations/**default**   float                   
+77     weighted_expert_2_output         7/28          activations/**default**   float                   
+78     weighted_expert_3_output         7/28          activations/**default**   float                   
+------ -------------------------------- ------------- ------------------------- ------------- --------- 
+
+C-Layers (31)
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+c_id   name (*_layer)           id   layer_type      macc     rom     tensors                             shape (array id)     
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+0      gating_conv1             26   Conv2D          18648    192     I: input_layer_output               f32(1x333x1) (73)    
+                                                                      S: gating_conv1_scratch0                                 
+                                                                      S: gating_conv1_scratch1                                 
+                                                                      W: gating_conv1_weights             f32(8x5x1x1) (64)    
+                                                                      W: gating_conv1_bias                f32(8) (60)          
+                                                                      O: gating_conv1_output              f32(1x166x8) (61)    
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+1      gating_dense_dense       34   Dense           21264    85056   I: gating_conv1_output              f32(1x166x8) (61)    
+                                                                      W: gating_dense_dense_weights       f32(16x1328) (67)    
+                                                                      W: gating_dense_dense_bias          f32(16) (65)         
+                                                                      O: gating_dense_dense_output        f32(1x16) (66)       
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+2      gating_dense             34   Nonlinearity    16       0       I: gating_dense_dense_output        f32(1x16) (66)       
+                                                                      O: gating_dense_output              f32(1x16) (68)       
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+3      gating_output_dense      38   Dense           51       204     I: gating_dense_output              f32(1x16) (68)       
+                                                                      W: gating_output_dense_weights      f32(3x16) (71)       
+                                                                      W: gating_output_dense_bias         f32(3) (69)          
+                                                                      O: gating_output_dense_output       f32(1x3) (70)        
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+4      gating_output            38   Nonlinearity    45       0       I: gating_output_dense_output       f32(1x3) (70)        
+                                                                      O: gating_output_output             f32(1x3) (72)        
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+5      gate_select_3            46   Dense           3        12      I: gating_output_output             f32(1x3) (72)        
+                                                                      W: gate_select_3_weights            f32(1x3) (59)        
+                                                                      O: gate_select_3_output             f32(1x1) (58)        
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+6      gate_select_2            44   Dense           3        12      I: gating_output_output             f32(1x3) (72)        
+                                                                      W: gate_select_2_weights            f32(1x3) (57)        
+                                                                      O: gate_select_2_output             f32(1x1) (56)        
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+7      gate_select_1            42   Dense           3        12      I: gating_output_output             f32(1x3) (72)        
+                                                                      W: gate_select_1_weights            f32(1x3) (55)        
+                                                                      O: gate_select_1_output             f32(1x1) (54)        
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+8      expert_3_conv1           12   Conv2D          13320    128     I: input_layer_output               f32(1x333x1) (73)    
+                                                                      S: expert_3_conv1_scratch0                               
+                                                                      S: expert_3_conv1_scratch1                               
+                                                                      W: expert_3_conv1_weights           f32(8x3x1x1) (40)    
+                                                                      W: expert_3_conv1_bias              f32(8) (36)          
+                                                                      O: expert_3_conv1_output            f32(1x166x8) (37)    
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+9      expert_3_conv2           28   Conv2D          154064   3648    I: expert_3_conv1_output            f32(1x166x8) (37)    
+                                                                      S: expert_3_conv2_scratch0                               
+                                                                      S: expert_3_conv2_scratch1                               
+                                                                      W: expert_3_conv2_weights           f32(16x7x1x8) (45)   
+                                                                      W: expert_3_conv2_bias              f32(16) (41)         
+                                                                      O: expert_3_conv2_output            f32(1x83x16) (42)    
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+10     expert_3_dense_dense     36   Dense           21264    85056   I: expert_3_conv2_output            f32(1x83x16) (42)    
+                                                                      W: expert_3_dense_dense_weights     f32(16x1328) (48)    
+                                                                      W: expert_3_dense_dense_bias        f32(16) (46)         
+                                                                      O: expert_3_dense_dense_output      f32(1x16) (47)       
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+11     expert_3_dense           36   Nonlinearity    16       0       I: expert_3_dense_dense_output      f32(1x16) (47)       
+                                                                      O: expert_3_dense_output            f32(1x16) (49)       
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+12     expert_3_softmax_dense   45   Dense           119      476     I: expert_3_dense_output            f32(1x16) (49)       
+                                                                      W: expert_3_softmax_dense_weights   f32(7x16) (52)       
+                                                                      W: expert_3_softmax_dense_bias      f32(7) (50)          
+                                                                      O: expert_3_softmax_dense_output    f32(1x7) (51)        
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+13     expert_3_softmax         45   Nonlinearity    105      0       I: expert_3_softmax_dense_output    f32(1x7) (51)        
+                                                                      O: expert_3_softmax_output          f32(1x7) (53)        
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+14     weighted_expert_3        49   Eltwise/mul     7        0       I: expert_3_softmax_output          f32(1x7) (53)        
+                                                                      I: gate_select_3_output             f32(1x7) (53)        
+                                                                      O: weighted_expert_3_output         f32(1x7) (78)        
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+15     expert_2_conv1           11   Conv2D          13320    128     I: input_layer_output               f32(1x333x1) (73)    
+                                                                      S: expert_2_conv1_scratch0                               
+                                                                      S: expert_2_conv1_scratch1                               
+                                                                      W: expert_2_conv1_weights           f32(8x3x1x1) (22)    
+                                                                      W: expert_2_conv1_bias              f32(8) (18)          
+                                                                      O: expert_2_conv1_output            f32(1x166x8) (19)    
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+16     expert_2_conv2           27   Conv2D          154064   3648    I: expert_2_conv1_output            f32(1x166x8) (19)    
+                                                                      S: expert_2_conv2_scratch0                               
+                                                                      S: expert_2_conv2_scratch1                               
+                                                                      W: expert_2_conv2_weights           f32(16x7x1x8) (27)   
+                                                                      W: expert_2_conv2_bias              f32(16) (23)         
+                                                                      O: expert_2_conv2_output            f32(1x83x16) (24)    
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+17     expert_2_dense_dense     35   Dense           21264    85056   I: expert_2_conv2_output            f32(1x83x16) (24)    
+                                                                      W: expert_2_dense_dense_weights     f32(16x1328) (30)    
+                                                                      W: expert_2_dense_dense_bias        f32(16) (28)         
+                                                                      O: expert_2_dense_dense_output      f32(1x16) (29)       
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+18     expert_2_dense           35   Nonlinearity    16       0       I: expert_2_dense_dense_output      f32(1x16) (29)       
+                                                                      O: expert_2_dense_output            f32(1x16) (31)       
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+19     expert_2_softmax_dense   43   Dense           119      476     I: expert_2_dense_output            f32(1x16) (31)       
+                                                                      W: expert_2_softmax_dense_weights   f32(7x16) (34)       
+                                                                      W: expert_2_softmax_dense_bias      f32(7) (32)          
+                                                                      O: expert_2_softmax_dense_output    f32(1x7) (33)        
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+20     expert_2_softmax         43   Nonlinearity    105      0       I: expert_2_softmax_dense_output    f32(1x7) (33)        
+                                                                      O: expert_2_softmax_output          f32(1x7) (35)        
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+21     weighted_expert_2        48   Eltwise/mul     7        0       I: expert_2_softmax_output          f32(1x7) (35)        
+                                                                      I: gate_select_2_output             f32(1x7) (35)        
+                                                                      O: weighted_expert_2_output         f32(1x7) (77)        
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+22     expert_1_conv1           10   Conv2D          13320    128     I: input_layer_output               f32(1x333x1) (73)    
+                                                                      S: expert_1_conv1_scratch0                               
+                                                                      S: expert_1_conv1_scratch1                               
+                                                                      W: expert_1_conv1_weights           f32(8x3x1x1) (4)     
+                                                                      W: expert_1_conv1_bias              f32(8) (0)           
+                                                                      O: expert_1_conv1_output            f32(1x166x8) (1)     
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+23     expert_1_conv2           25   Conv2D          154064   3648    I: expert_1_conv1_output            f32(1x166x8) (1)     
+                                                                      S: expert_1_conv2_scratch0                               
+                                                                      S: expert_1_conv2_scratch1                               
+                                                                      W: expert_1_conv2_weights           f32(16x7x1x8) (9)    
+                                                                      W: expert_1_conv2_bias              f32(16) (5)          
+                                                                      O: expert_1_conv2_output            f32(1x83x16) (6)     
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+24     expert_1_dense_dense     33   Dense           21264    85056   I: expert_1_conv2_output            f32(1x83x16) (6)     
+                                                                      W: expert_1_dense_dense_weights     f32(16x1328) (12)    
+                                                                      W: expert_1_dense_dense_bias        f32(16) (10)         
+                                                                      O: expert_1_dense_dense_output      f32(1x16) (11)       
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+25     expert_1_dense           33   Nonlinearity    16       0       I: expert_1_dense_dense_output      f32(1x16) (11)       
+                                                                      O: expert_1_dense_output            f32(1x16) (13)       
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+26     expert_1_softmax_dense   41   Dense           119      476     I: expert_1_dense_output            f32(1x16) (13)       
+                                                                      W: expert_1_softmax_dense_weights   f32(7x16) (16)       
+                                                                      W: expert_1_softmax_dense_bias      f32(7) (14)          
+                                                                      O: expert_1_softmax_dense_output    f32(1x7) (15)        
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+27     expert_1_softmax         41   Nonlinearity    105      0       I: expert_1_softmax_dense_output    f32(1x7) (15)        
+                                                                      O: expert_1_softmax_output          f32(1x7) (17)        
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+28     weighted_expert_1        47   Eltwise/mul     7        0       I: expert_1_softmax_output          f32(1x7) (17)        
+                                                                      I: gate_select_1_output             f32(1x7) (17)        
+                                                                      O: weighted_expert_1_output         f32(1x7) (76)        
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+29     moe_output_left_0        50   Eltwise/add     7        0       I: weighted_expert_1_output         f32(1x7) (76)        
+                                                                      I: weighted_expert_2_output         f32(1x7) (76)        
+                                                                      O: moe_output_left_0_output         f32(1x7) (74)        
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+30     moe_output               50   Eltwise/add     7        0       I: moe_output_left_0_output         f32(1x7) (74)        
+                                                                      I: weighted_expert_3_output         f32(1x7) (74)        
+                                                                      O: moe_output_output                f32(1x7) (75)        
+------ ------------------------ ---- --------------- -------- ------- ----------------------------------- -------------------- 
+
+
+
+Number of operations per c-layer
+------- ------ --------------------------------- --------- -------------- 
+c_id    m_id   name (type)                             #op           type 
+------- ------ --------------------------------- --------- -------------- 
+0       26     gating_conv1 (Conv2D)                18,648   smul_f32_f32 
+1       34     gating_dense_dense (Dense)           21,264   smul_f32_f32 
+2       34     gating_dense (Nonlinearity)              16     op_f32_f32 
+3       38     gating_output_dense (Dense)              51   smul_f32_f32 
+4       38     gating_output (Nonlinearity)             45     op_f32_f32 
+5       46     gate_select_3 (Dense)                     3   smul_f32_f32 
+6       44     gate_select_2 (Dense)                     3   smul_f32_f32 
+7       42     gate_select_1 (Dense)                     3   smul_f32_f32 
+8       12     expert_3_conv1 (Conv2D)              13,320   smul_f32_f32 
+9       28     expert_3_conv2 (Conv2D)             154,064   smul_f32_f32 
+10      36     expert_3_dense_dense (Dense)         21,264   smul_f32_f32 
+11      36     expert_3_dense (Nonlinearity)            16     op_f32_f32 
+12      45     expert_3_softmax_dense (Dense)          119   smul_f32_f32 
+13      45     expert_3_softmax (Nonlinearity)         105     op_f32_f32 
+14      49     weighted_expert_3 (Eltwise/mul)           7     op_f32_f32 
+15      11     expert_2_conv1 (Conv2D)              13,320   smul_f32_f32 
+16      27     expert_2_conv2 (Conv2D)             154,064   smul_f32_f32 
+17      35     expert_2_dense_dense (Dense)         21,264   smul_f32_f32 
+18      35     expert_2_dense (Nonlinearity)            16     op_f32_f32 
+19      43     expert_2_softmax_dense (Dense)          119   smul_f32_f32 
+20      43     expert_2_softmax (Nonlinearity)         105     op_f32_f32 
+21      48     weighted_expert_2 (Eltwise/mul)           7     op_f32_f32 
+22      10     expert_1_conv1 (Conv2D)              13,320   smul_f32_f32 
+23      25     expert_1_conv2 (Conv2D)             154,064   smul_f32_f32 
+24      33     expert_1_dense_dense (Dense)         21,264   smul_f32_f32 
+25      33     expert_1_dense (Nonlinearity)            16     op_f32_f32 
+26      41     expert_1_softmax_dense (Dense)          119   smul_f32_f32 
+27      41     expert_1_softmax (Nonlinearity)         105     op_f32_f32 
+28      47     weighted_expert_1 (Eltwise/mul)           7     op_f32_f32 
+29      50     moe_output_left_0 (Eltwise/add)           7     op_f32_f32 
+30      50     moe_output (Eltwise/add)                  7     op_f32_f32 
+------- ------ --------------------------------- --------- -------------- 
+total                                              606,732 
+
+Number of operation types
+---------------- --------- ----------- 
+operation type           #           % 
+---------------- --------- ----------- 
+smul_f32_f32       606,273       99.9% 
+op_f32_f32             459        0.1% 
+
+Complexity report (model)
+------ ------------------------ ------------------------- ------------------------- ---------- 
+m_id   name                     c_macc                    c_rom                     c_id       
+------ ------------------------ ------------------------- ------------------------- ---------- 
+10     expert_1_pool1           ||                 2.2%   |                  0.0%   [22]       
+11     expert_2_pool1           ||                 2.2%   |                  0.0%   [15]       
+12     expert_3_pool1           ||                 2.2%   |                  0.0%   [8]        
+25     expert_1_pool2           ||||||||||||||||  25.4%   |                  1.0%   [23]       
+26     gating_pool1             ||                 3.1%   |                  0.1%   [0]        
+27     expert_2_pool2           ||||||||||||||||  25.4%   |                  1.0%   [16]       
+28     expert_3_pool2           ||||||||||||||||  25.4%   |                  1.0%   [9]        
+33     expert_1_dense_dense     |||                3.5%   ||||||||||||||||  24.1%   [24, 25]   
+34     gating_dense_dense       |||                3.5%   ||||||||||||||||  24.1%   [1, 2]     
+35     expert_2_dense_dense     |||                3.5%   ||||||||||||||||  24.1%   [17, 18]   
+36     expert_3_dense_dense     |||                3.5%   ||||||||||||||||  24.1%   [10, 11]   
+38     gating_output_dense      |                  0.0%   |                  0.1%   [3, 4]     
+41     expert_1_softmax_dense   |                  0.0%   |                  0.1%   [26, 27]   
+42     gate_select_1            |                  0.0%   |                  0.0%   [7]        
+43     expert_2_softmax_dense   |                  0.0%   |                  0.1%   [19, 20]   
+44     gate_select_2            |                  0.0%   |                  0.0%   [6]        
+45     expert_3_softmax_dense   |                  0.0%   |                  0.1%   [12, 13]   
+46     gate_select_3            |                  0.0%   |                  0.0%   [5]        
+47     weighted_expert_1        |                  0.0%   |                  0.0%   [28]       
+48     weighted_expert_2        |                  0.0%   |                  0.0%   [21]       
+49     weighted_expert_3        |                  0.0%   |                  0.0%   [14]       
+50     moe_output               |                  0.0%   |                  0.0%   [29, 30]   
+------ ------------------------ ------------------------- ------------------------- ---------- 
+macc=606,732 weights=353,412 act=12,320 ram_io=0
+ 
+ Requested memory size by section - "stm32l4" target
+ ------------------------------ -------- --------- -------- -------- 
+ module                             text    rodata     data      bss 
+ ------------------------------ -------- --------- -------- -------- 
+ NetworkRuntime1020_CM4_GCC.a     12,040         0        0        0 
+ network.o                         1,660       248    9,980      372 
+ network_data.o                       48        16       88        0 
+ lib (toolchain)*                    614        24        0        0 
+ ------------------------------ -------- --------- -------- -------- 
+ RT total**                       14,362       288   10,068      372 
+ ------------------------------ -------- --------- -------- -------- 
+ weights                               0   353,416        0        0 
+ activations                           0         0        0   12,320 
+ io                                    0         0        0        0 
+ ------------------------------ -------- --------- -------- -------- 
+ TOTAL                            14,362   353,704   10,068   12,692 
+ ------------------------------ -------- --------- -------- -------- 
+ *  toolchain objects (libm/libgcc*)
+ ** RT AI runtime objects (kernels+infrastructure)
+  
+  Summary - "stm32l4" target
+  --------------------------------------------------
+               FLASH (ro)     %*   RAM (rw)       % 
+  --------------------------------------------------
+  RT total         24,718   6.5%     10,440   45.9% 
+  --------------------------------------------------
+  TOTAL           378,134            22,760         
+  --------------------------------------------------
+  *  rt/total
+
+
+Generated files (7)
+------------------------------------------------------------------------ 
+C:\Users\DO DUC KHOI\.stm32cubemx\network_output\network_data_params.h   
+C:\Users\DO DUC KHOI\.stm32cubemx\network_output\network_data_params.c   
+C:\Users\DO DUC KHOI\.stm32cubemx\network_output\network_data.h          
+C:\Users\DO DUC KHOI\.stm32cubemx\network_output\network_data.c          
+C:\Users\DO DUC KHOI\.stm32cubemx\network_output\network_config.h        
+C:\Users\DO DUC KHOI\.stm32cubemx\network_output\network.h               
+C:\Users\DO DUC KHOI\.stm32cubemx\network_output\network.c               
