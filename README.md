@@ -37,7 +37,7 @@ The system includes a LabVIEW-based interface for:
 - Managing data acquisition process  
 
 <p align="center">
-  <img src="images/labview_ui.png" width="600"/>
+  <img src="C:\Users\DO DUC KHOI\OneDrive - Phenikaa Univesity\Ảnh\Ảnh chụp màn hình\Screenshot 2026-05-10 235918.png" width="600"/>
 </p>
 
 ---
@@ -104,5 +104,5 @@ The system includes a LabVIEW-based interface for:
 
 ## Author
 
-- Your Name  
-- GitHub: https://github.com/yourusername
+- Khoi Do Duc
+- GitHub: https://github.com/khoideptraivocung
