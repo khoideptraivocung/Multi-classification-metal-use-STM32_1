@@ -1,4 +1,4 @@
-# Multi-classification Metal Thickness System using STM32
+<img width="1189" height="490" alt="image" src="https://github.com/user-attachments/assets/a54c7d03-f319-49c3-9f90-9feff31c7172" /># Multi-classification Metal Thickness System using STM32
 
 ## Overview
 This project presents an embedded system for metal thickness classification using sensor data acquisition, data-driven modeling, and deployment on STM32 microcontroller.
@@ -56,7 +56,12 @@ The system includes a LabVIEW-based interface for:
 - Normalization and preprocessing techniques are applied  
 - A lightweight classification model is developed for thickness prediction  
 - Multiple models are evaluated to select the optimal solution  
-
+<p align="center">
+  <img src="phd_pect/tải xuống.png" width="600"/>
+</p>
+<p align="center">
+  <img src="phd_pect/tải xuống (1)" width="600"/>
+</p>
 ---
 
 ## 5. Embedded Deployment (STM32)
